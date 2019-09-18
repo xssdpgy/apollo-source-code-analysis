@@ -20,23 +20,29 @@ import javax.persistence.PreUpdate;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class BaseEntity {
 
+  //唯一标识ID
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "Id")
   private long id;
 
+  //是否删除   默认值为否
   @Column(name = "IsDeleted", columnDefinition = "Bit default '0'")
   protected boolean isDeleted = false;
 
+  //数据创建者
   @Column(name = "DataChange_CreatedBy", nullable = false)
   private String dataChangeCreatedBy;
 
+  //数据创建时间
   @Column(name = "DataChange_CreatedTime", nullable = false)
   private Date dataChangeCreatedTime;
 
+  //数据更新者
   @Column(name = "DataChange_LastModifiedBy")
   private String dataChangeLastModifiedBy;
 
+  //数据更新时间
   @Column(name = "DataChange_LastTime")
   private Date dataChangeLastModifiedTime;
 
@@ -88,17 +94,20 @@ public abstract class BaseEntity {
     this.id = id;
   }
 
+  //保存前置方法
   @PrePersist
   protected void prePersist() {
     if (this.dataChangeCreatedTime == null) dataChangeCreatedTime = new Date();
     if (this.dataChangeLastModifiedTime == null) dataChangeLastModifiedTime = new Date();
   }
 
+  //更新前置方法
   @PreUpdate
   protected void preUpdate() {
     this.dataChangeLastModifiedTime = new Date();
   }
 
+  //删除前置方法
   @PreRemove
   protected void preRemove() {
     this.dataChangeLastModifiedTime = new Date();

@@ -16,10 +16,12 @@ import javax.persistence.Table;
 @Where(clause = "isDeleted = 0")
 public class App extends BaseEntity {
 
+  //App名
   @NotBlank(message = "Name cannot be blank")
   @Column(name = "Name", nullable = false)
   private String name;
 
+  //AppId
   @NotBlank(message = "AppId cannot be blank")
   @Pattern(
       regexp = InputValidator.CLUSTER_NAMESPACE_VALIDATOR,
@@ -28,19 +30,24 @@ public class App extends BaseEntity {
   @Column(name = "AppId", nullable = false)
   private String appId;
 
+  //部门编号
   @Column(name = "OrgId", nullable = false)
   private String orgId;
 
+  //部门名称
   @Column(name = "OrgName", nullable = false)
   private String orgName;
 
+  //拥有者名称
   @NotBlank(message = "OwnerName cannot be blank")
   @Column(name = "OwnerName", nullable = false)
   private String ownerName;
 
+  //拥有者邮箱
   @NotBlank(message = "OwnerEmail cannot be blank")
   @Column(name = "OwnerEmail", nullable = false)
   private String ownerEmail;
+
 
   public String getAppId() {
     return appId;
